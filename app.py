@@ -18,6 +18,17 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: black;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("📊 Feature Selection: Filter vs Wrapper")
 st.write("Comparison using Breast Cancer Dataset")
 
@@ -62,28 +73,6 @@ col1, col2, col3 = st.columns(3)
 col1.metric("Baseline (All Features)", round(baseline_acc, 4))
 col2.metric("Filter Method (SelectKBest)", round(filter_acc, 4))
 col3.metric("Wrapper Method (RFE)", round(wrapper_acc, 4))
-
-st.divider()
-
-# -----------------------------
-# Show Selected Features
-# -----------------------------
-st.subheader("Selected Features")
-
-filter_features = feature_names[filter_selector.get_support()]
-wrapper_features = feature_names[wrapper_selector.get_support()]
-
-col4, col5 = st.columns(2)
-
-with col4:
-    st.write("### Filter Method Features")
-    for f in filter_features:
-        st.write("-", f)
-
-with col5:
-    st.write("### Wrapper Method Features")
-    for f in wrapper_features:
-        st.write("-", f)
 
 st.divider()
 
@@ -134,3 +123,25 @@ if st.button("Predict"):
         st.success("✅ Benign Tumor")
     else:
         st.error("⚠️ Malignant Tumor")
+
+st.divider()
+
+# -----------------------------
+# Show Selected Features
+# -----------------------------
+st.subheader("Selected Features")
+
+filter_features = feature_names[filter_selector.get_support()]
+wrapper_features = feature_names[wrapper_selector.get_support()]
+
+col4, col5 = st.columns(2)
+
+with col4:
+    st.write("### Filter Method Features")
+    for f in filter_features:
+        st.write("-", f)
+
+with col5:
+    st.write("### Wrapper Method Features")
+    for f in wrapper_features:
+        st.write("-", f)
